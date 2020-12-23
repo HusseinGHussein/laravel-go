@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $topic = new \App\Models\Topic;
+    $topic->title = 'Hello there';
+    $topic->save();
 });
