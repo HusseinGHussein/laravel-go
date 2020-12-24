@@ -7,6 +7,8 @@ use Illuminate\Contracts\Validation\Rule;
 
 class ValidCoupon implements Rule
 {
+    protected $coupon;
+
     protected $message;
 
     /**
@@ -14,9 +16,9 @@ class ValidCoupon implements Rule
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(?Coupon $coupon)
     {
-        //
+        $this->coupon = $coupon;
     }
 
     /**
@@ -28,8 +30,6 @@ class ValidCoupon implements Rule
      */
     public function passes($attribute, $value)
     {
-        $this->coupon = Coupon::where('code', $value)->first();
-
         if (!$this->coupon) {
             return $this->fail('Coupon not found.');
         }
@@ -39,16 +39,6 @@ class ValidCoupon implements Rule
         }
 
         return true;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @return void
-     */
-    public function getModel()
-    {
-        return $this->coupon;
     }
 
     /**
